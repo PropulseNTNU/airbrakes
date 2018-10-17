@@ -9,6 +9,7 @@
 #include <SPI.h>
 
 // the rocket object representing the rockets state
+// we may need to clean this using delete but im not sure if nessesary or when to do it
 Rocket* rocket = Rocket::Instance();
 
 void setup() {

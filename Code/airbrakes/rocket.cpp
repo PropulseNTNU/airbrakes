@@ -1,13 +1,13 @@
 #include "rocket.h"
 #include <stddef.h> 
 
-Rocket* Rocket::m_pInstance = NULL;
+Rocket* Rocket::_instance = NULL;
 
 Rocket* Rocket::Instance(){
-    if(!m_pInstance){
-        m_pInstance = new Rocket(0,0,0,0,0,false,true);
+    if(!_instance){
+        _instance = new Rocket(0,0,0,0,false,true);
     }
-    return m_pInstance;
+    return _instance;
 }
 
 float Rocket::getAltitude(){
@@ -36,9 +36,7 @@ bool Rocket::getActiveState(){
 
 int Rocket::getAirbrakesPosition(){
     // The angle of the servo, from 0 to 180 degrees. 
-    // this is maybe not necesary sice the returned valus is the value last written to _servo
-    _airbrakes_position = _servo.read();
-    return _airbrakes_position;
+    return _servo.read();;
 }
 
 bool Rocket::setAltitude(float altitude){
@@ -73,10 +71,8 @@ bool Rocket::setActiveState(bool active_state){
 
 bool Rocket::setAirbraksesPosition(int airbrakes_position){
     if(airbrakes_position >=  0 && airbrakes_position <= 180){
-        _airbrakes_position = airbrakes_position;
-        _servo.write(_airbrakes_position);
+        _servo.write(airbrakes_position);
         return true;
     }
     return false;
-
 }
