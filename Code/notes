@@ -1,0 +1,3 @@
+1) should setters return a boolean as status/confirmation;
+2) should a private constructors behavior be implemented in hte header file
+3) should we use a separate variable for the 
