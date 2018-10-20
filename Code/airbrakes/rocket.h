@@ -1,6 +1,5 @@
 #ifndef AIRBRAKES_ROCKET_H
 #define AIRBRAKES_ROCKET_H
-#include <Servo.h>
 #include "airbrakes_setup.h"
 class Rocket
 {
@@ -30,13 +29,10 @@ class Rocket
             _attitude = attitude;
             _velocity = velocity;
             _active_state = active_state;
-            _airbrakes_neutral = airbrakes_neutral;
-            _servo.attach(ACTUATOR_PIN);
         };
         Rocket(Rocket const&){};
         Rocket& operator=(Rocket const&);
         static Rocket* _instance;
-        Servo _servo;
         float _altitude;
         float _acceleration;
         float _attitude;

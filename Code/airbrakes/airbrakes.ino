@@ -10,16 +10,17 @@
 
 // the rocket object representing the rockets state
 // we may need to clean this using delete but im not sure if nessesary or when to do it
-Rocket* rocket = Rocket::Instance();
+Rocket* rocket;
 
 void setup() {
-  // set the modes for all pins
-  setup_pinmodes();
-  
+  rocket = Rocket::Instance();
   // initialize SPI
   SPI.begin(); 
 }
 
 void loop() {
-  float accel = rocket->getAcceleration();
+  rocket->setAirbraksesPosition(1);
+  delay(1000);
+  rocket->setAirbraksesPosition(179);
+  delay(1000);
 }

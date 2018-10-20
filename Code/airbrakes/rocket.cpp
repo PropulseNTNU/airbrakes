@@ -1,11 +1,15 @@
 #include "rocket.h"
 #include <stddef.h> 
+#include <Servo.h>
+#include "airbrakes_setup.h"
 
 Rocket* Rocket::_instance = NULL;
+Servo _servo;
 
 Rocket* Rocket::Instance(){
     if(!_instance){
         _instance = new Rocket(0,0,0,0,false,true);
+        _servo.attach(ACTUATOR_PIN);
     }
     return _instance;
 }
