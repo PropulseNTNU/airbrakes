@@ -1,5 +1,3 @@
-  
-// header files that can be used for constants and functions so the main file is kept clean
 #include "airbrakes_calculations.h"
 #include "airbrakes_sensors.h"
 #include "airbrakes_setup.h"
@@ -12,6 +10,9 @@
 // we may need to clean this using delete but im not sure if nessesary or when to do it
 Rocket* rocket;
 
+const int potPin = A0;
+int val = 0;
+
 void setup() {
   rocket = Rocket::Instance();
   // initialize SPI
@@ -19,8 +20,9 @@ void setup() {
 }
 
 void loop() {
-  rocket->setAirbraksesPosition(1);
-  delay(1000);
-  rocket->setAirbraksesPosition(179);
-  delay(1000);
+  val = analogRead(potPin);
+  val =  map(val, 0, 1023, 0, 180);
+  rocket->setAirbraksesPosition(val);
+  delay(50);
+
 }

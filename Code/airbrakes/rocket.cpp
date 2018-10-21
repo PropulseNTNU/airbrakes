@@ -75,8 +75,10 @@ bool Rocket::setActiveState(bool active_state){
 
 bool Rocket::setAirbraksesPosition(int airbrakes_position){
     if(airbrakes_position >=  0 && airbrakes_position <= 180){
+      if(_servo.read() != airbrakes_position){
         _servo.write(airbrakes_position);
         return true;
+      }
     }
     return false;
 }

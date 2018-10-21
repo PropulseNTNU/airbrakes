@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/hardware/teensy/avr/libraries/Servo",
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/hardware/arduino/avr/libraries/SPI/src",
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/hardware/teensy/avr/cores/teensy3"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/tools/**",
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/hardware/arduino/avr/**"
+            ],
+            "forcedInclude": [
+                "/home/havard/Documents/git/propulse/arduino/arduino-1.8.7-linux64/arduino-1.8.7/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ]
+        }
+    ],
+    "version": 4
+}
