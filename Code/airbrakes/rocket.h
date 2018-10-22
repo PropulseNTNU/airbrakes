@@ -35,6 +35,7 @@ class Rocket
         static Rocket* _instance;
         float _altitude;
         float _acceleration;
+        //float is most likely not the right datatype..may need to split up or make struct
         float _attitude;
         float _velocity;
         // airbrakes_neutral is a boolean that is true if the airbrakes are in the default neutral position

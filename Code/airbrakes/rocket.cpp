@@ -40,7 +40,8 @@ bool Rocket::getActiveState(){
 
 int Rocket::getAirbrakesPosition(){
     // The angle of the servo, from 0 to 180 degrees. 
-    return _servo.read();;
+    // Here we may need to implement a way of reading the position with a sensor
+    return _servo.read();
 }
 
 bool Rocket::setAltitude(float altitude){
@@ -53,8 +54,8 @@ bool Rocket::setAcceleration(float acceleration){
     return true;
 }
 
-bool Rocket::setAttitude(float acceleration){
-    _acceleration = acceleration;
+bool Rocket::setAttitude(float attitude){
+    _attitude = attitude;
     return true;
 }
 

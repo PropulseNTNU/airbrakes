@@ -4,4 +4,4 @@
 #define SLAVESELECT_PIN 20
 #define ACTUATOR_PIN 9
 
-#endif // Put this line at the end of your file.
+#endif
