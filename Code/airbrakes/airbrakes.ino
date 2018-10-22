@@ -23,6 +23,6 @@ void loop() {
   val = analogRead(potPin);
   val =  map(val, 0, 1023, 0, 180);
   rocket->setAirbraksesPosition(val);
-  delay(50);
+  delay(40);
 
 }
