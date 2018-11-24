@@ -1,5 +1,4 @@
 
-
 //functions
 float calk_ref(int altitude);
 float controller(int reference, long step, float *riemann_sum, float cur_velocity, float prev_velocity, int kpp, int kpd, float kpi);

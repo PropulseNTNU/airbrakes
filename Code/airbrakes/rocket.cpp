@@ -1,15 +1,15 @@
 #include "rocket.h"
 #include <stddef.h> 
-#include <Servo.h>
+//#include <Servo.h>
 #include "airbrakes_setup.h"
 
 Rocket* Rocket::_instance = NULL;
-Servo _servo;
+//Servo _servo;
 
 Rocket* Rocket::Instance(){
     if(!_instance){
         _instance = new Rocket(0,0,0,0,false,true);
-        _servo.attach(ACTUATOR_PIN);
+       // _servo.attach(ACTUATOR_PIN);
     }
     return _instance;
 }
@@ -41,7 +41,7 @@ bool Rocket::getActiveState(){
 int Rocket::getAirbrakesPosition(){
     // The angle of the servo, from 0 to 180 degrees. 
     // Here we may need to implement a way of reading the position with a sensor
-    return _servo.read();
+    return 1;//_servo.read();
 }
 
 bool Rocket::setAltitude(float altitude){
@@ -76,10 +76,10 @@ bool Rocket::setActiveState(bool active_state){
 
 bool Rocket::setAirbraksesPosition(int airbrakes_position){
     if(airbrakes_position >=  0 && airbrakes_position <= 180){
-      if(_servo.read() != airbrakes_position){
+      /*if(_servo.read() != airbrakes_position){
         _servo.write(airbrakes_position);
         return true;
-      }
+      }*/
     }
     return false;
 }
