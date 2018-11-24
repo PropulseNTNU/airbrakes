@@ -39,11 +39,11 @@ void setup() {
 }
 
 void loop() {
-  timestep = millis() - time_start;
-  time_start = millis();
+  timestep = micros() - time_start;
+  time_start = micros();
   prev_velocity = cur_velocity;
   cur_velocity = rocket->getVelocity();
-  u = controller(calk_ref(rocket->getAltitude()), timestep, &riemann_sum, cur_velocity, prev_velocity, 5, 5, 5);
+  u = controller(calk_ref(rocket->getAltitude()), (float)timestep, &riemann_sum, cur_velocity, prev_velocity, 5, 5, 5);
   if (u>180) {
     rocket->setAirbraksesPosition(180);
   }
