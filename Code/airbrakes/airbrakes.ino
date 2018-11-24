@@ -32,7 +32,7 @@ void loop() {
   //val =  map(val, 0, 1023, 0, 180);
   //rocket->setAirbraksesPosition(val);
   //delay(40);
-  float  u= controller(calk_ref(rocket->getAltitude()), rocket->getVelocity(), timestep, &riemann_sum, cur_velocity, prev_velocity, 5,5,5);
+  float  u= controller(calk_ref(rocket->getAltitude()), timestep, &riemann_sum, cur_velocity, prev_velocity, 5,5,5);
   prev_velocity=cur_velocity;
   if (u>180) {
     rocket->setAirbraksesPosition(180);
