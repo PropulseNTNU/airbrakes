@@ -2,6 +2,7 @@
 #include <stddef.h> 
 //#include <Servo.h>
 #include "airbrakes_setup.h"
+#include "Arduino.h"
 
 Rocket* Rocket::_instance = NULL;
 //Servo _servo;
@@ -9,7 +10,7 @@ Rocket* Rocket::_instance = NULL;
 Rocket* Rocket::Instance(){
     if(!_instance){
         _instance = new Rocket(0,0,0,0,false,true);
-       // _servo.attach(ACTUATOR_PIN);
+       // _servo.attach(SERVO_PIN);
     }
     return _instance;
 }
@@ -74,12 +75,21 @@ bool Rocket::setActiveState(bool active_state){
     return _active_state;
 }
 
-bool Rocket::setAirbraksesPosition(int airbrakes_position){
-    if(airbrakes_position >=  0 && airbrakes_position <= 180){
-      /*if(_servo.read() != airbrakes_position){
-        _servo.write(airbrakes_position);
-        return true;
-      }*/
+bool Rocket::setAirbraksesPosition(float airbrakes_position){
+    if(airbrakes_position <= SERVO_0 ){
+        digitalWrite(SERVO_PIN, HIGH);
+        delayMicroseconds(SERVO_0);
+        digitalWrite(SERVO_PIN, LOW);
     }
-    return false;
+    else if(airbrakes_position >= SERVO_180){
+        digitalWrite(SERVO_PIN, HIGH);
+        delayMicroseconds(SERVO_180);
+        digitalWrite(SERVO_PIN, LOW);
+    }
+    else{
+        digitalWrite(SERVO_PIN, HIGH);
+        delayMicroseconds(airbrakes_position);
+        digitalWrite(SERVO_PIN, LOW);
+    }
+    return true;
 }
