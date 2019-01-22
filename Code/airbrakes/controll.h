@@ -1,7 +1,6 @@
 #ifndef AIRBRAKES_CONTROLL_H
 #define AIRBRAKES_CONTROLL_H
 #include "rocket.h"
-#include <NewPing.h>
 
 //structs
 typedef struct Parameters_t {
@@ -10,11 +9,10 @@ typedef struct Parameters_t {
   float kpd;
 }Parameters;
 
-//functions
-float calk_ref(int altitude);
-// the sonar parameter is just for demo testing 
-float controller(Rocket* rocket,float* error, Parameters* parameters, float* riemann_sum, float* derivative, NewPing* sonar, float dt);
+// reference height, velocity pair. Height is index and 
+extern const float reference[3300];
+
+float controller(Rocket* rocket, float* error, Parameters* parameters, float* riemann_sum, float dt, unsigned int height, float velocity);
 float integrate(float prev_sum, float value, float step);
-float derivate(float prev_val, float cur_val, float step);
 
 #endif

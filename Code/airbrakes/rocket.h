@@ -9,7 +9,7 @@ class Rocket
         bool setAcceleration(float acceleration);
         bool setAttitude(float attitude);
         bool setVelocity(float velocity);
-        bool setAirbraksesPosition(float position);
+        bool setAirbraksesPosition(unsigned int position);
         bool setActiveState(bool active_state);
         bool setAirbrakesNeutral(bool airbrakes_neutral);
 
