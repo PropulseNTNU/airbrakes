@@ -27,6 +27,10 @@ float Rocket::getAttitude(){
     return _attitude;
 }
 
+float Rocket::getBarometer(){
+    return _barometer;
+}
+
 float Rocket::getVelocity(){
     return _velocity;
 }

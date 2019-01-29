@@ -1,5 +1,4 @@
-#include <BasicLinearAlgebra.h>
-using namespace BLA;
+
 #include <Wire.h>
 #include "airbrakes_calculations.h"
 #include "airbrakes_sensors.h"
