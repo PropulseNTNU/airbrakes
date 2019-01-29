@@ -1,3 +1,5 @@
+#include <BasicLinearAlgebra.h>
+using namespace BLA;
 #include <Wire.h>
 #include "airbrakes_calculations.h"
 #include "airbrakes_sensors.h"
@@ -21,6 +23,7 @@ float error = 0;
 float riemann_sum = 0;
 float derivative = 0;
 float  u;
+
 Parameters parameters = { 100, 2, 1 };
 
 // time variables for delta time
@@ -34,7 +37,7 @@ void setup() {
   while(!Serial) {};
 }
 
-void loop() {  
+void loop() {
   time_new = millis();
   u = controller(rocket, &error, &parameters, &riemann_sum, &derivative, &sonar, (float)(time_new - time_old)/1000);
   time_old = time_new;
