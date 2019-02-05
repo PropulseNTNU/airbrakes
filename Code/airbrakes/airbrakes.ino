@@ -1,13 +1,10 @@
-#include <BasicLinearAlgebra.h>
-using namespace BLA;
+
 #include <Wire.h>
 #include "airbrakes_calculations.h"
 #include "airbrakes_sensors.h"
 #include "airbrakes_setup.h"
 #include "rocket.h"
 #include "controll.h"
-#include "MPU9250.h"
-#include <NewPing.h>
 
 // Distance sensor for a demo
 NewPing sonar(TRIGGER_PIN, ECHO_PIN);
