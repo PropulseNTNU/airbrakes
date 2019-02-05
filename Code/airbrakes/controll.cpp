@@ -31,7 +31,11 @@ float controller(Rocket* rocket, float* error, Parameters* parameters, float* ri
      *riemann_sum = SERVO_0;
   }
 
-float kalman(float  altitude, float acceleration){
+float kalman(float  altitude, float acceleration, float delta_t){ 
+  //Updating variables
+
+  //reference_v=rocket.getReferenceVelocity();
+
   //Computing kalman gain------------------------------------------------------
   K_k = P_k_bar*(~C_d)*((C_d*P_k_bar*(~C_d)+R).Inverse());// litt usikker på om K_k skal være matrise eller skalar
   Seral.println(K_k);

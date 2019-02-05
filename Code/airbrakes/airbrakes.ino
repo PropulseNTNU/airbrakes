@@ -29,6 +29,7 @@ Parameters parameters = { 100, 2, 1 };
 // time variables for delta time
 unsigned long time_new, time_old;
 
+
 void setup() {
   pinMode(SERVO_PIN, OUTPUT);
   rocket = Rocket::Instance();
@@ -39,7 +40,8 @@ void setup() {
 
 void loop() {
   time_new = millis();
-  u = controller(rocket, &error, &parameters, &riemann_sum, &derivative, &sonar, (float)(time_new - time_old)/1000);
+  delta_t=(float)(time_new - time_old)/1000;
+  u = controller(rocket, &error, &parameters, &riemann_sum, &derivative, &sonar, delta_t);
   time_old = time_new;
   rocket->setAirbraksesPosition(u);
   Serial.print("Controll signal: ");

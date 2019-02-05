@@ -9,7 +9,13 @@ typedef struct Parameters_t {
   float kpi;
   float kpd;
 }Parameters;
-A_d<2,2>={0,1,0,3};
+//Er det en god idé å ha disse parameterne her eller bude de vært pekere eller noe?
+float drag= 20;
+float reference_v= 200;
+float mass= 30;
+float delta_t=0.0001;//used as timestep in integrator an kalman filter. Gets calculated in the loop.
+
+A_d<2,2>={0,1,0,-delta_t*(drag*reference_v/mass)};
 B_d<2,1>={0,1};
 C_d<1,2>={1,0};
 E_d<2,2>={0.00001,0.0000002,0.000000004,0.0000003};
@@ -25,6 +31,6 @@ float calk_ref(int altitude);
 float controller(Rocket* rocket,float* error, Parameters* parameters, float* riemann_sum, float* derivative, NewPing* sonar, float dt);
 float integrate(float prev_sum, float value, float step);
 float derivate(float prev_val, float cur_val, float step);
-float kalman(float  altitude, float acceleration);
+float kalman(float  altitude, float acceleration, float delta_t);
 
 #endif
