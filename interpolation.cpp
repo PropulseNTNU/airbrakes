@@ -1,9 +1,11 @@
+
 #include "interpolation.h"
 #include "Arduino.h"
-// the planed optimal path precalculated. It will be represented as a array off height(index) -> velocity pairs
+
+// Lookuptable based on optimal path calculated by the simulation. It will be represented as an array off height(index) -> velocity pairs
 const float reference_velocity[5] = {100,75,60,55,52};
 
-float getReferenceVelocity(float height){
+float getReferenceVelocity(float height){ //Linear interpolation between heights
   unsigned int x0 = floor(height);
   unsigned int x1 = x0 + 1;
   float y0 = reference_velocity[x0];

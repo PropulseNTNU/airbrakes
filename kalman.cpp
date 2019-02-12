@@ -2,6 +2,7 @@
 #include <BasicLinearAlgebra.h>
 using namespace BLA;
 
+//Initiates matrices needed in the kalman filter
 Matrix<2,2> A_d;
 Matrix<2,1> B_d;
 const Matrix<1,2> C_d={1,0};
@@ -16,7 +17,7 @@ Matrix<2,1> K_k;
 Matrix<2,1> Z;
 Matrix<2, 2> P_k;
 
-//dummy values:
+//physical values
 float drag=1;
 float mass=21.58;
 
