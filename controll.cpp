@@ -1,8 +1,7 @@
 
 
 #include "controll.h"
-#include "Arduino.h"
-#include "kalman.h"
+
 
 
 float integrate(float prev_sum, float value, float step){
