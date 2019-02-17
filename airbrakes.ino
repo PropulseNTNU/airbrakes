@@ -3,6 +3,7 @@
 #include "kalman.h"
 #include "interpolation.h"
 #include <Servo.h>
+#include <math.h>
 Servo _servo;
 
 //initilises variables
@@ -16,7 +17,8 @@ unsigned long time_new, time_old = 0; // time variables for delta time
 float sensor_data[2]={0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
 float estimates[2]; //Estimates from Kalman filter. [height, velocity]
 float reference_v= 200; //reference_velovity
-
+float flap_width=0.1106; // the with of the air brake flap in meters. This is only for testing, and will not be used during flight
+float max_extention=0.02; //the max length of the air brake flaps in meters. This is only for testing, and will not be used during flight
 void setup() { //initiates servo and printing
   pinMode(SERVO_PIN, OUTPUT);
   _servo.attach(SERVO_PIN);
@@ -36,6 +38,6 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   u += controller(&error, &parameters, &riemann_sum, dt); //updates controll signal
   time_old = time_new;
   if(u >= 0 && u <= 180) {
-     _servo.write(u); //updates servo position
+     _servo.write(flap_width*max_extention*sin(u)); //updates servo position
    }
 }
