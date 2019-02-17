@@ -33,7 +33,7 @@ def initSerial(port, baudrate, timeout):
         print(error)
         return None
 
-def readControlSignal(ser, prefix='', size=0):
+def readControlSignal(ser, prefix='', lines = 1):
     """
     Read the control signal. This function alows other data than the control signal to be on the serial connection.
     Specify the prefix if you know there will be other data in addition to the control signal on the serial link.
@@ -42,27 +42,26 @@ def readControlSignal(ser, prefix='', size=0):
 
     :param str prefix: The control signal will have a prefix if other data is on the link. 
     Specify the prefix so we know what data to read.  
-
-    :param int size: How many bytes we should read before. This number should be more than the 
-    number of bytes  writen to the serial link in one loop by the air brakes program.
     
-    :return int: returns the control signal or None if it cant find one.
+    :return: returns the control signal or None if it fails to find one.
     """
     if prefix != '':
         try:
-            data = ser.read(size).decode("utf-8").split("\n")
-            for i in range(len(data)-1, 0, -1):
-                if data[i].startswith("c_s") and data[i].endswith("\r"):
-                    return int(data[i].replace("c_s", '').replace("\r", ''))
-            print("Did not find the control signal")
-                    
+            lines_read = 0
+            while lines_read < lines:
+                lines_read += 1
+                data = ser.readline().decode("utf-8")
+                if prefix in data:
+                    return data.replace(prefix, '').replace("\r", '')
+            print("Read " + str(lines_read) + " lines without finding the control signal.")
+            return None
         except AttributeError as error:
             print("The serial connection is not initialized. Run the initSerial function first")
             print(error)
             return None
     else:
         try:
-            return int.from_bytes(ser.read(), byteorder="big")
+            return ser.readline().decode("utf-8")
                     
         except AttributeError as error:
             print("The serial connection is not initialized. Run the initSerial function first")
@@ -83,19 +82,16 @@ def close(ser):
     ser.close()
 
 ser = initSerial("/dev/ttyACM0", 9600, 0.5)
-vel = 0
-height = 0
-while 1:
-    vel += 1
-    height +=2
-    sendHeightAndVelocity(ser, height, vel)
-    if height > 1000:
-        vel = 0
-        height = 0
 
-#for i in range(500):
- #  print(readControlSignal(ser))  
+total = 0
+iteration= 0
+while iteration < 5000:
+    iteration +=1
+    start = time.time()
+    print(readControlSignal(ser, "c_s", 100))  
+    total += time.time() - start
 
+print("Average time: ", total/5000)
    
 close(ser) 
 
