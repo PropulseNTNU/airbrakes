@@ -70,8 +70,8 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   time_old = time_new;
   prev_u=test_modifications(u, prev_u, dt);
   u=prev_u;
-  if(u >= 0 && u <= 90) {
-    Serial.print("Controll_signal");
-    Serial.println(test_calculate_area(u));
-   }
+  Serial.print("c_s");
+  Serial.println(test_calculate_area(u));
+   //Serial.print("dt:");
+   //Serial.println(dt,5);
 }
