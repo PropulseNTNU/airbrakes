@@ -61,8 +61,12 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   time_new = micros();
   dt = (float)(time_new - time_old);
   dt /= (float)1000000; // converted to seconds
-
-  read_sireal(estimates);
+  
+  read_sireal(sensor_data);
+  Serial.print("Height: ");
+  Serial.println(sensor_data[0]);
+  Serial.print("Velocity: ");
+  Serial.println(sensor_data[1]);
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
   reference_v=getReferenceVelocity(estimates[0]);
   error=reference_v-estimates[1];
@@ -70,14 +74,14 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   time_old = time_new;
   prev_u=test_modifications(u, prev_u, dt);
   u=prev_u;
-  if (u<90){
+  if (u>90){
     u=90;
   }
   if (u<0){
     u=0;
   }
   Serial.print("c_s");
-  Serial.println(test_calculate_area(u));
-   //Serial.print("dt:");
-   //Serial.println(dt,5);
+  Serial.println(test_calculate_area(u),5);
+  Serial.print("itime");
+  Serial.println(dt,5);
 }

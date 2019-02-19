@@ -52,7 +52,11 @@ def readControlSignal(ser, prefix='', lines = 1):
                 lines_read += 1
                 data = ser.readline().decode("utf-8")
                 if prefix in data:
-                    return data.replace(prefix, '').replace("\r", '')
+                    try:
+                        retdata = float(data.replace(prefix, '').replace("\r", ''))
+                        return retdata
+                    except:
+                        pass
             print("Read " + str(lines_read) + " lines without finding the control signal.")
             return None
         except AttributeError as error:
@@ -80,6 +84,7 @@ def sendHeightAndVelocity(ser, height, velocity):
     
 def close(ser):
     ser.close()
+
 
 ser = initSerial("/dev/ttyACM0", 9600, 0.5)
 
