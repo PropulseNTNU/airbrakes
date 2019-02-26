@@ -45,9 +45,14 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(sensor_data[1]);
         
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
-  reference_v=getReferenceVelocity(estimates[0]);
-  Serial.print("est_vel");
+
+  Serial.print("est_h");
+  Serial.println(estimates[0]);
+
+  Serial.print("est_v");
   Serial.println(estimates[1]);
+  
+  reference_v=getReferenceVelocity(estimates[0]);
   error=reference_v-estimates[1];
   u = controller(&error, &parameters, &riemann_sum, dt); //updates controll signal
   time_old = time_new;
@@ -63,5 +68,5 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(test_calculate_area(u),5);
   Serial.print("itime");
   Serial.println(dt,5);
-  delay(20);
+  delay(10);
 }
