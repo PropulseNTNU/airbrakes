@@ -26,35 +26,26 @@ void setup() { //initiates servo and printing
   while(!Serial) {};
 }
 void read_sireal(float* sensor_data){
-  char character;
-  for(int i = 0; i < 10; i++){
-     character = Serial.read();
-     if(character == 'h'){
-       String h_str="";
-       for(int i = 0; i < 4; i++){
-         character = Serial.read();
-         if(character != 'a'){
-           h_str.concat(character);
-         }
-         else{
-           sensor_data[0] = h_str.toFloat();
-           String a_str="";
-           for(int i = 0; i < 5; i++){
-             character = Serial.read();
-             if(character != 'h'){
-               a_str.concat(character);
-             }
-             else{
-               sensor_data[1] = a_str.toFloat();
-               break;
-             }
-           }
-           break;
-         }
-       }
-       break;
-     }
- }
+int i = 0;
+String result = "";
+
+while(Serial.available() > 0){
+  char charIn = (char)Serial.read();
+  if(charIn == 'h'){
+    while(Serial.available() > 0){
+      charIn = (char)Serial.read();
+      if(charIn != 'a'){
+          result.concat(charIn);
+        }else{
+          break;
+        } 
+      }
+      break;
+  }
+}
+Serial.print("res");
+Serial.println(result.toFloat());
+    
 }
 void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   //Updats dt
@@ -63,10 +54,13 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   dt /= (float)1000000; // converted to seconds
   
   read_sireal(sensor_data);
+  
   Serial.print("Height: ");
   Serial.println(sensor_data[0]);
   Serial.print("Acceleration: ");
   Serial.println(sensor_data[1]);
+  
+        
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
   reference_v=getReferenceVelocity(estimates[0]);
   error=reference_v-estimates[1];
