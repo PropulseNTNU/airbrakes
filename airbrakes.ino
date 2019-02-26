@@ -26,26 +26,37 @@ void setup() { //initiates servo and printing
   while(!Serial) {};
 }
 void read_sireal(float* sensor_data){
-int i = 0;
-String result = "";
+  String height = "";
+  String acceleration = "";
 
-while(Serial.available() > 0){
-  char charIn = (char)Serial.read();
-  if(charIn == 'h'){
-    while(Serial.available() > 0){
-      charIn = (char)Serial.read();
-      if(charIn != 'a'){
-          result.concat(charIn);
-        }else{
-          break;
-        } 
-      }
-      break;
+  while(Serial.available() > 30){
+    char charIn = (char)Serial.read();
+    if(charIn == 'h'){
+      while(Serial.available() > 20){
+        charIn = (char)Serial.read();
+        if(charIn != 'a'){
+            height.concat(charIn);
+          }else{
+            while(Serial.available() > 20){
+                charIn = (char)Serial.read();
+                if(charIn != 'b'){
+                  acceleration.concat(charIn);
+                }else{
+                    break;
+                }
+            }
+            break;
+          } 
+        }
+        break;
+    }
   }
-}
-Serial.print("res");
-Serial.println(result.toFloat());
-    
+  sensor_data[0] = height.toFloat();
+  sensor_data[1] = acceleration.toFloat();
+  Serial.print("h");
+  Serial.println(height.toFloat(),5);
+  Serial.print("a");
+  Serial.println(acceleration.toFloat(),5);
 }
 void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   //Updats dt
@@ -53,6 +64,7 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   dt = (float)(time_new - time_old);
   dt /= (float)1000000; // converted to seconds
   
+  read_sireal(sensor_data);
   read_sireal(sensor_data);
   
   Serial.print("Height: ");
@@ -78,4 +90,5 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(test_calculate_area(u),5);
   Serial.print("itime");
   Serial.println(dt,5);
+  delay(200);
 }
