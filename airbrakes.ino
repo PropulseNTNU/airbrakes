@@ -25,7 +25,7 @@ void setup() { //initiates servo and printing
   Serial.begin(9600);
   while(!Serial) {};
 }
-void read_sireal(float* estimates){
+void read_sireal(float* sensor_data){
   char character;
   for(int i = 0; i < 10; i++){
      character = Serial.read();
@@ -37,7 +37,7 @@ void read_sireal(float* estimates){
            h_str.concat(character);
          }
          else{
-           estimates[0] = h_str.toFloat();
+           sensor_data[0] = h_str.toFloat();
            String a_str="";
            for(int i = 0; i < 5; i++){
              character = Serial.read();
@@ -45,7 +45,7 @@ void read_sireal(float* estimates){
                a_str.concat(character);
              }
              else{
-               estimates[1] = a_str.toFloat();
+               sensor_data[1] = a_str.toFloat();
                break;
              }
            }
@@ -65,7 +65,7 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   read_sireal(sensor_data);
   Serial.print("Height: ");
   Serial.println(sensor_data[0]);
-  Serial.print("Velocity: ");
+  Serial.print("Acceleration: ");
   Serial.println(sensor_data[1]);
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
   reference_v=getReferenceVelocity(estimates[0]);
