@@ -1,12 +1,8 @@
-#include <Servo.h>
-
 #include "airbrakes_setup.h"
 #include "controll.h"
 #include "kalman.h"
 #include "interpolation.h"
-
-#include "serial_reader.h"
-
+#include <Servo.h>
 
 Servo _servo;
 
@@ -29,20 +25,52 @@ void setup() { //initiates servo and printing
   Serial.begin(9600);
   while(!Serial) {};
 }
+void read_sireal(float* sensor_data){
+  String height = "";
+  String acceleration = "";
 
-
+  while(Serial.available() > 20){
+    char charIn = (char)Serial.read();
+    if(charIn == 'h'){
+      while(Serial.available() > 10){
+        charIn = (char)Serial.read();
+        if(charIn != 'a'){
+            height.concat(charIn);
+          }else{
+            while(Serial.available() > 9){
+                charIn = (char)Serial.read();
+                if(charIn != 'b'){
+                  acceleration.concat(charIn);
+                }else{
+                    break;
+                }
+            }
+            break;
+          } 
+        }
+        break;
+    }
+  }
+  sensor_data[0] = height.toFloat();
+  sensor_data[1] = acceleration.toFloat();
+  Serial.print("t_h");
+  Serial.println(height.toFloat(),5);
+  Serial.print("t_a");
+  Serial.println(acceleration.toFloat(),5);
+}
 void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   //Updats dt
   time_new = micros();
   dt = (float)(time_new - time_old);
   dt /= (float)1000000; // converted to seconds
-
-  updateSensorData(sensor_data);
   
-  Serial.print("t_h");
+  read_sireal(sensor_data);
+  
+  Serial.print("Height: ");
   Serial.println(sensor_data[0]);
-  Serial.print("t_a");
+  Serial.print("Acceleration: ");
   Serial.println(sensor_data[1]);
+  
         
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
   reference_v=getReferenceVelocity(estimates[0]);
@@ -63,5 +91,5 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(test_calculate_area(u),5);
   Serial.print("itime");
   Serial.println(dt,5);
-  delay(20);
+  delay(150);
 }
