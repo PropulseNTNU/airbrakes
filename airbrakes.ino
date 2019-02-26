@@ -33,19 +33,19 @@ void read_sireal(float* estimates){
        String h_str="";
        for(int i = 0; i < 4; i++){
          character = Serial.read();
-         if(character != 'v'){
+         if(character != 'a'){
            h_str.concat(character);
          }
          else{
-           estimates[0] = h_str.toInt();
-           String v_str="";
+           estimates[0] = h_str.toFloat();
+           String a_str="";
            for(int i = 0; i < 5; i++){
              character = Serial.read();
              if(character != 'h'){
-               v_str.concat(character);
+               a_str.concat(character);
              }
              else{
-               estimates[1] = v_str.toInt();
+               estimates[1] = a_str.toFloat();
                break;
              }
            }
