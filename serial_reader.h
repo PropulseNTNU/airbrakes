@@ -4,7 +4,7 @@
 
 void parseData();
 void recvWithStartEndMarkers();
-void updateSensorData(float* sensor_data);
+bool updateSensorData(float* sensor_data);
 
 
 #endif

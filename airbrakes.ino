@@ -43,7 +43,8 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(sensor_data[0]);
   Serial.print("t_a");
   Serial.println(sensor_data[1]);
-        
+  
+
   kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
 
   Serial.print("est_h");

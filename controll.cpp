@@ -1,5 +1,3 @@
-
-
 #include "controll.h"
 #include <math.h>
 

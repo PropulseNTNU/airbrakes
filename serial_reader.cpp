@@ -1,7 +1,8 @@
-
+#include <Arduino.h>
 #include <string.h>
 #include <stdlib.h> 
-#include <Arduino.h>
+#include "serial_reader.h"
+
 const int numChars = 32;
 char receivedChars[numChars];
 char tempChars[numChars];        // temporary array for use when parsing
@@ -57,7 +58,7 @@ void recvWithStartEndMarkers() {
     }
 }
 
-void updateSensorData(float * sensor_data){
+bool updateSensorData(float * sensor_data){
   recvWithStartEndMarkers();
   if (newData == true) {
       strcpy(tempChars, receivedChars);
@@ -65,5 +66,7 @@ void updateSensorData(float * sensor_data){
           //   because strtok() used in parseData() replaces the commas with \0
       parseData(sensor_data);
       newData = false;
+      return true;
   }
+  return false;
 }
