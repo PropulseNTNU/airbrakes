@@ -54,7 +54,7 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(estimates[1]);
   
   reference_v=getReferenceVelocity(estimates[0]);
-  error=reference_v-estimates[1];
+  error=estimates[1] - reference_v;
   u = controller(&error, &parameters, &riemann_sum, dt); //updates controll signal
   time_old = time_new;
   prev_u=test_modifications(u, prev_u, dt);
