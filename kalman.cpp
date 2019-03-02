@@ -11,7 +11,7 @@ const Matrix<2,2> Q={3,0 ,0 ,0.0000001};
 const float R=0.0000001; //Litt usikker på om R skal være en matrise eller en skalar. trodde egentlig den skulle være en matrise.
 const Matrix<2,2> I={1,0,0,1};
 Matrix<2,2> P_k_bar={1,0,0.1,0};
-Matrix<2,1>x_hat_bar={2000,300};
+Matrix<2,1>x_hat_bar={0,0};// skal egentlig være ca.{2000,300};
 Matrix<2,1> x_hat = {0,0};
 Matrix<2,1> K_k;
 Matrix<2,1> Z;
@@ -26,7 +26,8 @@ float mass=21.58;
 
 void kalman(float* estimates, float  altitude, float acceleration, float dt, float reference_v){
   //Updating variables
-  A_d={0,dt,0,-dt*(drag*reference_v/mass)}; //bruker reference_v fordi vi har linearisert rundt referansepunktet. Usikker på om dette er riktig
+  //A_d={0,dt,0,-dt*(drag*reference_v/mass)}; //bruker reference_v fordi vi har linearisert rundt referansepunktet. Usikker på om dette er riktig
+  A_d={1,dt,0,1};//Lurer på om dette blir A_d fordi x2_dot er akselrasjon, og det kommer inn i B
   B_d={0,dt};
 
   //Computing kalman gain------------------------------------------------------
