@@ -14,16 +14,15 @@ bool newData = false;
 
 void parseData(float * sensor_data) {      // split the data into its parts
 
-    char * strtokIndx; // this is used by strtok() as an index
-
-    strtokIndx = strtok(tempChars,",");      // get the first part - the string
-    strcpy(messageFromPC, strtokIndx); // copy it to messageFromPC
- 
-    strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-    sensor_data[0] = atof(strtokIndx);     // convert this part to an integer
-
-    strtokIndx = strtok(NULL, ",");
-    sensor_data[1] = atof(strtokIndx);     // convert this part to a float
+    char * strtokIndx = strtok(tempChars,",");   // this is used by strtok() as an index
+    int i = 0;
+        
+    while(strtokIndx != NULL) {
+      sensor_data[i] = atof(strtokIndx);
+      strtokIndx = strtok(NULL, ",");
+      i += 1;
+    }
+    
 }
 
 void recvWithStartEndMarkers() {

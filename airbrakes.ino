@@ -16,10 +16,11 @@ float riemann_sum = 0; //used in integrator, witch is used in controller
 float u = 0; //sets servo to 45 degrees, this causes the air brakes to brake at 50% capasaty
 float prev_u=0;//only used for testing
 float dt = 0; //time step used in integrator and kalman filter
+float simDt = 0; // the timestep we we need to be in sync with Penumbra
 Parameters parameters = { 1 , 1 , 1 }; //Control parameters (Kp, Ki, Kd)
 unsigned long time_new, time_old = 0; // time variables for delta time
 
-float sensor_data[2]={0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
+float sensor_data[3]={0,0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
 float estimates[2]; //Estimates from Kalman filter. [height, velocity]
 float reference_v= 0; //reference_velovity
 
@@ -28,6 +29,7 @@ void setup() { //initiates servo and printing
   _servo.attach(SERVO_PIN);
   Serial.begin(9600);
   while(!Serial) {};
+  Serial.clear();
 }
 
 
@@ -43,9 +45,20 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(sensor_data[0]);
   Serial.print("t_a");
   Serial.println(sensor_data[1]);
-  
+  Serial.print("iter");
+  Serial.println(sensor_data[2], 4);
 
-  kalman(estimates, sensor_data[0], sensor_data[1], dt, reference_v);
+  
+  if(dt > 0 && sensor_data[2] > 0){
+    simDt = 0.03/(sensor_data[2]/dt);
+    }
+  else{
+      simDt = 0.001;
+    }
+
+  Serial.print("Sim time: ");
+  Serial.println(simDt);
+  kalman(estimates, sensor_data[0], sensor_data[1], simDt, reference_v);
 
   Serial.print("est_h");
   Serial.println(estimates[0]);
@@ -55,9 +68,9 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   
   reference_v=getReferenceVelocity(estimates[0]);
   error=estimates[1] - reference_v;
-  u = controller(&error, &parameters, &riemann_sum, dt); //updates controll signal
+  u = controller(&error, &parameters, &riemann_sum, simDt); //updates controll signal
   time_old = time_new;
-  prev_u=test_modifications(u, prev_u, dt);
+  prev_u=test_modifications(u, prev_u, simDt);
   u=prev_u;
   if (u>90){
     u=90;
