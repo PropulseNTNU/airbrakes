@@ -49,18 +49,33 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(sensor_data[2], 4);
   Serial.print("vel");
   Serial.println(sensor_data[3]);
-
+  
   
   if(dt > 0 && sensor_data[2] > 0){
     simDt = 0.03/(sensor_data[2]/dt);
     }
   else{
-      simDt = 0.001;
+      simDt = 0.00000000001;
     }
 
   Serial.print("Sim time: ");
   Serial.println(simDt);
-  kalman(estimates, sensor_data[0], sensor_data[1], simDt, reference_v);
+  if(sensor_data[0]<1600){
+    Serial.print("est_h");
+    Serial.println("0");
+
+    Serial.print("est_v");
+    Serial.println("0");
+
+    Serial.print("c_s");
+    Serial.println("0");
+
+    Serial.print("itime");
+    Serial.println(dt,5);
+    delay(10);
+  }
+  else{
+    kalman(estimates, sensor_data[0], sensor_data[1], simDt, reference_v);
 
   Serial.print("est_h");
   Serial.println(estimates[0]);
@@ -85,4 +100,7 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.print("itime");
   Serial.println(dt,5);
   delay(10);
+  }
+  Serial.print("error_h");
+  Serial.println(sensor_data[0]-estimates[0]);
 }
