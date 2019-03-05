@@ -20,7 +20,7 @@ float simDt = 0; // the timestep we we need to be in sync with Penumbra
 Parameters parameters = { 1 , 1 , 1 }; //Control parameters (Kp, Ki, Kd)
 unsigned long time_new, time_old = 0; // time variables for delta time
 
-float sensor_data[3]={0,0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
+float sensor_data[4]={0,0,0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
 float estimates[2]; //Estimates from Kalman filter. [height, velocity]
 float reference_v= 0; //reference_velovity
 
@@ -47,6 +47,8 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
   Serial.println(sensor_data[1]);
   Serial.print("iter");
   Serial.println(sensor_data[2], 4);
+  Serial.print("vel");
+  Serial.println(sensor_data[3]);
 
   
   if(dt > 0 && sensor_data[2] > 0){
@@ -79,7 +81,7 @@ void loop() { //Main-loop. Will be replaced with the loop in the statemachine.
     u=0;
   }
   Serial.print("c_s");
-  Serial.println(test_calculate_area(u),5);
+  Serial.println(test_calculate_area(u * 3.1415/180),5);
   Serial.print("itime");
   Serial.println(dt,5);
   delay(10);
