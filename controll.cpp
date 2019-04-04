@@ -21,6 +21,7 @@ float controller(float* error, Parameters* parameters, float* riemann_sum, float
 float test_calculate_area(float u){
   return 3*flap_width*max_extention*sin(u);
 }
+
 float test_modifications(float ref_u, float prev_u, float dt){//Calculates the actual actuation based on servospeed
   if (ref_u==prev_u){
     return ref_u;

@@ -7,9 +7,6 @@ const int numChars = 32;
 char receivedChars[numChars];
 char tempChars[numChars];        // temporary array for use when parsing
 
-      // variables to hold the parsed data
-char messageFromPC[numChars] = {0};
-
 bool newData = false;
 
 void parseData(float * sensor_data) {      // split the data into its parts
