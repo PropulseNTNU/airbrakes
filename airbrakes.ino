@@ -58,7 +58,7 @@ void loop() {
       simDt = 0.01;
     }
 
-  if(sensor_data[0]<1250){
+  if(sensor_data[0]<1287){
     Serial.print("est_h");
     Serial.println("0");
 
@@ -82,14 +82,14 @@ void loop() {
     u = controller(&error, &parameters, &riemann_sum, simDt); //updates controll signal
     prev_u = test_modifications(u, prev_u, simDt);
     u = prev_u;
-    if (u > 90){
-        u = 90;
-    }
     if (u < 0){
         u = 0;
     }
+    else if (u > 90){
+        u = 90;
+    }
     Serial.print("c_s");
-    Serial.println(test_calculate_area(u * 3.1415/180),4);
+    Serial.println(test_calculate_area(u),4);
   }
   delay(10);
 }

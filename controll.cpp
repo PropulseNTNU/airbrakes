@@ -19,7 +19,7 @@ float controller(float* error, Parameters* parameters, float* riemann_sum, float
 
 //functions for testing
 float test_calculate_area(float u){
-  return 3*flap_width*max_extention*sin(u);
+  return 3*flap_width*max_extention*sin(u * 1000 / 57296);
 }
 
 float test_modifications(float ref_u, float prev_u, float dt){//Calculates the actual actuation based on servospeed
@@ -27,13 +27,13 @@ float test_modifications(float ref_u, float prev_u, float dt){//Calculates the a
     return ref_u;
   }
   if (ref_u>prev_u){
-    prev_u+=(60/0.13)*dt;//Calculates the servo position based on rotationspeed.
+    prev_u+=(60.0/0.13)*dt;//Calculates the servo position based on rotationspeed.
     if(prev_u>ref_u){//In this case the servo has reaced its reference, and ref_u can be returned
       return ref_u;
     }
     return prev_u;
   }
-  prev_u-=(60/0.13)*dt;//Calculates the servo position based on rotationspeed.
+  prev_u-=(60.0/0.13)*dt;//Calculates the servo position based on rotationspeed.
   if (prev_u<ref_u) {//In this case the servo has reaced its reference, and ref_u can be returned
     return ref_u;
   }
