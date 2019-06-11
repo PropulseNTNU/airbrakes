@@ -4,8 +4,12 @@
 
 //varibles for testing
 float flap_width=0.1106; // the with of the air brake flap in meters. This is only for testing, and will not be used during flight
-float max_extention=0.02; //the max length of the air brake flaps in meters. This is only for testing, and will not be used during flight
+float max_extention= 0.4;//0.02; //the max length of the air brake flaps in meters. This is only for testing, and will not be used during flight
+float flaps = 3;
 
+float getAirbrakesArea() {
+  return flaps * flap_width * max_extention;
+}
 
 float integrate(float prev_sum, float value, float step){
   return prev_sum + (value * step);
@@ -19,7 +23,7 @@ float controller(float* error, Parameters* parameters, float* riemann_sum, float
 
 //functions for testing
 float test_calculate_area(float u){
-  return 3*flap_width*max_extention*sin(u * 1000 / 57296);
+  return getAirbrakesArea()*sin(u * 1000.0 / 57296.0); // sin takes radians as input
 }
 
 float test_modifications(float ref_u, float prev_u, float dt){//Calculates the actual actuation based on servospeed

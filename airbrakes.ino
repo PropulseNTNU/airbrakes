@@ -15,7 +15,7 @@ float u = 0; //sets servo to 45 degrees, this causes the air brakes to brake at 
 float prev_u=0;//only used for testing
 float dt = 0; //time step used in integrator and kalman filter
 float simDt = 0; // the timestep we we need to be in sync with Penumbra
-Parameters parameters = { 1 , 0.01 , 1 }; //Control parameters (Kp, Ki, Kd)
+Parameters parameters = { 20 , 0.01 , 1 }; //Control parameters (Kp, Ki, Kd)
 unsigned long time_new, time_old = 0; // time variables for delta time
 
 float sensor_data[4]={0,0,0,0}; //Barometer at index 0 and accelrometer (z-direction)at index 1. Utvides kanskje senere m/pitch
@@ -85,11 +85,12 @@ void loop() {
     if (u < 0){
         u = 0;
     }
-    else if (u > 90){
-        u = 90;
+    else if (u > 75){
+        u = 75;
     }
+
     Serial.print("c_s");
-    Serial.println(test_calculate_area(u),4);
+    Serial.println(test_calculate_area(u),6);
   }
   delay(10);
 }
